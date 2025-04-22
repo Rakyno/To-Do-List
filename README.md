@@ -1,12 +1,18 @@
-# React + Vite
+#To-DO-List
+This is a simple and not so effiecient To-Do list
+The header is just a h1 that says todo thats why i didn't create another component just for the header.
+The sort selector helps you choose how to sort the list either by date or Name or even completion satatus.
+then we can see the list that has been fetched from "jsonplaceholder.typicode.com/todos" using axios.GET
+we limited the fetched data to the first 5 post to make our list smaller because we don't have pagination.
+we also use loacal state to add new to-do's that have the default date of today but you also get to pick your-
+due date with calander that opens when you click on the calander logo thingy all of this ofcousre are on the Add todo from component.
+We can use the checkbox behind each to do to determine completion 
+We added loading animation to EVERYTHING(but we shouldnt have cuz it makes our SPA slower ) and plus its really cool and reusable so I made it a component
+Also if you have deleted all the task(maybe you have done all of them! kudos!!) then our list displays a message that you have no task for now
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The TO-do list(c0mponent) renders the todo-items(components)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
