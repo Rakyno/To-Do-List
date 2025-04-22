@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-# To-Do-List
-=======
 #To-DO-List
 This is a simple and not so effiecient To-Do list
 The header is just a h1 that says todo thats why i didn't create another component just for the header.
@@ -14,4 +11,10 @@ We added loading animation to EVERYTHING(but we shouldnt have cuz it makes our S
 Also if you have deleted all the task(maybe you have done all of them! kudos!!) then our list displays a message that you have no task for now
 
 The TO-do list(c0mponent) renders the todo-items(components)
->>>>>>> Stashed changes
+
+
+
+
+
+
+# To-Do-List
