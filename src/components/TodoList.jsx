@@ -1,7 +1,7 @@
 import TodoItem from "./TodoItem";
 import { useState } from "react";
 
-const TodoList = ({ todos, onToggle, onDelete, loading, currentlyUpdatingId }) => {
+const TodoList = ({ todos, onToggle, onDelete, loading, onUpdate, currentlyUpdatingId }) => {
   const [sortBy, setSortBy] = useState("completed");
 
   const sortedTodos = [...todos].sort((a, b) => {
@@ -42,7 +42,7 @@ const TodoList = ({ todos, onToggle, onDelete, loading, currentlyUpdatingId }) =
               onDelete={onDelete}
               loading={loading}
               currentlyUpdatingId={currentlyUpdatingId}
-
+              onUpdate={onUpdate}
             />
           ))}
         </ul>

@@ -29,15 +29,14 @@ function App() {
     fetchTodos();
   }, []);
 
-  // Add this function to generate temporary IDs
-// Replace the temp ID generation with this
+  
 const generateTempId = () => {
   return 'temp-' + Math.random().toString(36).substr(2, 9);
 };
 
 // Update your addTodo function
 const addTodo = async (title, dueDate) => {
-  const tempId = generateTempId(); // ✅ Correctly declared at the top, in scope
+  const tempId = generateTempId(); // ✅ Correctly declared at the top, in scope gpt
   try {
     setLoading(true);
 
@@ -98,7 +97,7 @@ const toggleTodo = async (id) => {
     
     const newCompletedState = !todoToToggle.completed;
     
-    // Optimistic update
+    // Optimistic update chatgpt
     setTodos(prevTodos => 
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, completed: newCompletedState } : todo
@@ -118,13 +117,51 @@ const toggleTodo = async (id) => {
     });
     
   } catch{
-    // Revert on error
+    
     setTodos(prevTodos => 
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, completed: !newCompletedState } : todo
       )
     );
     setError('Failed to update todo status');
+  } finally {
+    setCurrentlyUpdatingId(null);
+    setLoading(false);
+  }
+};
+
+const updateTodo = async (id, updatedData) => {
+  // Store the original todo data before making changes
+  const originalTodo = todos.find(todo => todo.id === id);
+  if (!originalTodo) return;
+
+  try {
+    setCurrentlyUpdatingId(id);
+    setLoading(true);
+
+    // Optimistic UI
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
+        todo.id === id ? { ...todo, ...updatedData } : todo
+      )
+    );
+
+    // Skip API call for temporary todos
+    if (originalTodo.isTemp) {
+      return;
+    }
+
+    // API call for persistent todos
+    await axios.patch(`${API_URL}/${id}`, updatedData);
+  } catch (error) {
+    // Revert on error using the original todo data we stored
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
+        todo.id === id ? originalTodo : todo
+      )
+    );
+    setError("Failed to update todo");
+    console.error("Update error:", error);
   } finally {
     setCurrentlyUpdatingId(null);
     setLoading(false);
@@ -149,7 +186,7 @@ const toggleTodo = async (id) => {
   return (
     <div className="max-w-md mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4 text-center border-b-2 pb-3 border-sky-700">Todo App</h1>
-      <TodoList todos={todos} onToggle={toggleTodo} onDelete={deleteTodo} loading={loading} currentlyUpdatingId={currentlyUpdatingId}/>
+      <TodoList todos={todos} onToggle={toggleTodo} onDelete={deleteTodo} loading={loading} onUpdate={updateTodo} currentlyUpdatingId={currentlyUpdatingId}/>
       <AddTodoForm onAdd={addTodo} />
     </div>
   );
