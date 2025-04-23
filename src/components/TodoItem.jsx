@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { FiEdit2, FiSave, FiX } from 'react-icons/fi';
-import ToggleTodo from './ToggleTodo';
-import UpdateTodo from './UpdateTodo';
 import DatePicker from 'react-datepicker';
 
 const TodoItem = ({ todo, onToggle, onDelete, onUpdate, currentlyUpdatingId }) => {

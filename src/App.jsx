@@ -185,7 +185,7 @@ const updateTodo = async (id, updatedData) => {
 
   return (
     <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center border-b-2 pb-3 border-sky-700">Todo App</h1>
+      <h1 className="font-cursive text-4xl  mb-4 text-center border-b-2  pb-3 border-sky-700">Todo App</h1>
       <TodoList todos={todos} onToggle={toggleTodo} onDelete={deleteTodo} loading={loading} onUpdate={updateTodo} currentlyUpdatingId={currentlyUpdatingId}/>
       <AddTodoForm onAdd={addTodo} />
     </div>
