@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { FiEdit2, FiSave, FiX } from 'react-icons/fi';
+import ToggleTodo from './ToggleTodo';
+import UpdateTodo from './UpdateTodo';
+import DatePicker from 'react-datepicker';
 
 const TodoItem = ({ todo, onToggle, onDelete, onUpdate, currentlyUpdatingId }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -18,7 +21,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate, currentlyUpdatingId }) =
   return (
     <li className="flex flex-col p-3 bg-white rounded-lg shadow mb-2">
       {isEditing ? (
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2 absolute z-10 mt-2 p-2 bg-white border rounded shadow-lg">
           <input
             type="text"
             value={editedTitle}
@@ -26,12 +29,16 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate, currentlyUpdatingId }) =
             className="p-2 border rounded focus:ring-2 focus:ring-blue-500"
             disabled={isUpdating}
           />
-          <input
-            type="date"
-            value={editedDueDate || ''}
-            onChange={(e) => setEditedDueDate(e.target.value)}
-            className="p-2 border rounded"
-            disabled={isUpdating}
+          <DatePicker
+          selected={editedDueDate}
+          onChange={(date) => {
+            setEditedDueDate(date);
+            
+          }}
+          inline
+          minDate={new Date()}
+      
+
           />
           <div className="flex space-x-2 justify-end">
             <button
@@ -59,15 +66,16 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate, currentlyUpdatingId }) =
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 flex-grow">
             <div className="relative">
+              
               <input
                 type="checkbox"
                 checked={todo.completed}
                 onChange={() => onToggle(todo.id)}
                 className={`h-5 w-5 rounded ${
                   todo.isTemp ? 'text-purple-600' : 'text-blue-600'
-                } focus:ring-${todo.isTemp ? 'purple' : 'blue'}-500 ${
-                  isUpdating ? 'opacity-50' : ''
-                }`}
+                  } focus:ring-${todo.isTemp ? 'purple' : 'blue'}-500 ${
+                    isUpdating ? 'opacity-50' : ''
+                    }`}
                 disabled={isUpdating}
               />
               {isUpdating && (
@@ -81,7 +89,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate, currentlyUpdatingId }) =
             <div className="flex-grow">
               <span className={`block ${
                 todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
-              }`}>
+                }`}>
                 {todo.title}
               </span>
               {todo.dueDate && (
@@ -93,6 +101,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate, currentlyUpdatingId }) =
           </div>
           <div className="flex space-x-2">
             <button
+                
               onClick={() => setIsEditing(true)}
               className="p-1 text-gray-500 hover:text-blue-500"
               title="Edit"

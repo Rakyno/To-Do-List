@@ -1,5 +1,7 @@
 import { useState } from "react";
+import DatePicker from "react-datepicker";
 import { FiCalendar } from "react-icons/fi";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddTodoForm = ({ onAdd }) => {
   const [title, setTitle] = useState("");
@@ -13,13 +15,6 @@ const AddTodoForm = ({ onAdd }) => {
     setTitle("");
     setDueDate("");
   };
-
-  const handleDateSelect = (date) => {
-    setDueDate(date);
-    setShowDatePicker(false);
-  };
-
-  const today = new Date().toISOString().split("T")[0];
 
   return (
     <form onSubmit={handleSubmit} className="mt-4">
@@ -48,25 +43,33 @@ const AddTodoForm = ({ onAdd }) => {
       </div>
 
       {showDatePicker && (
-        <div className="mt-2 p-2 bg-white border rounded shadow-lg">
-          <input
-            type="date"
-            min={today}
-            value={dueDate || today}
-            onChange={(e) => handleDateSelect(e.target.value)}
-            className="w-full p-2 border rounded"
+        <div className="absolute z-10 mt-2 p-2 bg-white border rounded shadow-lg">
+          <DatePicker
+            selected={dueDate}
+            onChange={(date) => {
+              setDueDate(date);
+              setShowDatePicker(false); // closes on day select
+            }}
+            inline
+            minDate={new Date()}
           />
           <div className="flex justify-between mt-2">
             <button
               type="button"
-              onClick={() => handleDateSelect("")}
+              onClick={() => {
+                setDueDate(null);
+                setShowDatePicker(false);
+              }}
               className="px-3 py-1 text-sm text-gray-600 hover:text-gray-800"
             >
               No date
             </button>
             <button
               type="button"
-              onClick={() => handleDateSelect(today)}
+              onClick={() => {
+                setDueDate(new Date());
+                setShowDatePicker(false);
+              }}
               className="px-3 py-1 text-sm bg-blue-100 text-blue-600 rounded hover:bg-blue-200"
             >
               Today
@@ -74,6 +77,7 @@ const AddTodoForm = ({ onAdd }) => {
           </div>
         </div>
       )}
+
     </form>
   );
 };
