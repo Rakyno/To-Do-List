@@ -124,7 +124,7 @@ const useTodos = () => {
       if (!originalTodo.isTemp) {
         await axios.patch(`${API_URL}/${id}`, updatedData);
       }
-    } catch (error) {
+    } catch {
       setTodos(prev =>
         prev.map(todo =>
           todo.id === id ? originalTodo : todo
