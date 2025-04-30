@@ -1,17 +1,23 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import TodoList from "./components/TodoList";
 import AddTodoForm from "./components/AddTodoForm";
 import LoadingSpinner from "./components/LoadingSpinner";
+import useTodos from "./components/Hooks/useTodos";
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [currentlyUpdatingId, setCurrentlyUpdatingId] = useState(null);
+  
+  const {
+    todos,
+    loading,
+    error,
+    currentlyUpdatingId,
+    addTodo,
+    toggleTodo,
+    updateTodo,
+    deleteTodo
+  } = useTodos();
 
 
-  const API_URL = "https://jsonplaceholder.typicode.com/todos";
+  /*const API_URL = "https://jsonplaceholder.typicode.com/todos";
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -178,7 +184,7 @@ const updateTodo = async (id, updatedData) => {
     } finally {
       setLoading(false);
     }
-  };
+  };*/
 
   if (loading) return <LoadingSpinner />;
   if (error) return <div className="text-red-500 p-4">Error: {error}</div>;
